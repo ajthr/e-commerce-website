@@ -1,6 +1,21 @@
 version: "3"
 
 services:
+    web:
+        container_name: ec_web_client
+        build:
+            context: ./web
+        stdin_open: true
+        volumes:
+            - ./web:/usr/src/web
+            - ./web/node_modules:/usr/src/web/node_modules
+        environment: 
+            - REACT_APP_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+            - REACT_APP_FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
+        ports:
+            - "3000"
+        command: >
+            sh -c "npm start"
     nginx:
         container_name: ec_nginx_proxy
         image: nginx:latest
@@ -8,3 +23,5 @@ services:
             - "80:80"
         volumes:
             - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            - web

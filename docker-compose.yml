@@ -56,6 +56,19 @@ services:
         depends_on: 
             mysql:
                 condition: service_healthy
+    products:
+        container_name: ec_products_service
+        build:
+            context: ./products
+        volumes: 
+                - ./products:/usr/src/api/products
+                - ./products/node_modules:/usr/src/api/products/node_modules
+        ports:
+            - "5000"
+        command: >
+            sh -c "npm run dev"
+        environment:
+            DB_URI: ${MONGO_DB_URI}
     nginx:
         container_name: ec_nginx_proxy
         image: nginx:latest
@@ -65,3 +78,5 @@ services:
             - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
         depends_on:
             - web
+            - auth
+            - products

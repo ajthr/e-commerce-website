@@ -1,0 +1,7 @@
+FROM node:16.5-slim
+
+WORKDIR /usr/src/api/products
+
+COPY package*.json ./
+
+RUN npm install

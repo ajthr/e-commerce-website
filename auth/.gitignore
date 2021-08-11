@@ -1,0 +1,8 @@
+# rsa keys
+*.key
+
+# cache
+__pycache__
+
+# mounted database
+db_data/

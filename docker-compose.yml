@@ -16,6 +16,46 @@ services:
             - "3000"
         command: >
             sh -c "npm start"
+    mysql:
+        container_name: mysql_database
+        image: mysql:8
+        restart: always
+        environment:
+            MYSQL_USER: ${DB_ADMIN_USER}
+            MYSQL_PASSWORD: ${DB_ADMIN_PWD}
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PWD}
+        volumes:
+               - ./auth/db_data:/var/lib/mysql
+               - ./auth/initdb:/docker-entrypoint-initdb.d
+        ports:
+            - "3306"
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-P", "3306"]
+            timeout: 10s
+            retries: 10
+    auth:
+        container_name: ec_auth_service
+        build: 
+            context: ./auth
+        ports: 
+            - "5000"
+        volumes: 
+            - ./auth:/usr/src/auth
+        command: >
+            sh -c "python manage.py init &&
+                    python manage.py migrate &&
+                    python manage.py runserver"
+        environment: 
+            - DATABASE_HOST=mysql_database
+            - DATABASE_NAME=auth
+            - TEST_DATABASE_NAME=tests
+            - DATABASE_PORT=3306
+            - DATABASE_USER=${DB_ADMIN_USER}
+            - DATABASE_PASSWORD=${DB_ADMIN_PWD}
+            - EMAIL_PWD=${EMAIL_PWD}
+        depends_on: 
+            mysql:
+                condition: service_healthy
     nginx:
         container_name: ec_nginx_proxy
         image: nginx:latest

@@ -1,0 +1,50 @@
+.google-login-btn {
+  width: 17rem;
+  height: 3rem !important;
+  border-radius: 4px !important;
+  background: hsl(0,0%,87%);
+  border:0px transparent !important;  
+  text-align: center;
+  margin:5px;
+  display: inline-block;
+  font-family: inherit !important;
+  font-size: 1rem !important;
+}
+
+.google-login-btn:hover {
+  background: hsl(0,0%,100%);
+}
+
+.facebook-login-btn {
+  width: 17rem;
+  height: 3rem;
+  border-radius: 4px;
+  background: hsl(220,44%,41%);
+  color:white;
+  border:0px transparent;  
+  text-align: center;
+  margin:5px;
+  display: inline-block;
+  font-size: 1rem !important;
+}
+
+.facebook-login-btn:hover {
+  background: hsl(220,44%,50%);
+}
+
+.email-login-btn {
+  width: 17rem;
+  height: 3rem;
+  border-radius: 4px;
+  background: hsl(0,0%,13%);
+  color:white;
+  border:0px transparent;  
+  text-align: center;
+  margin:5px;
+  display: inline-block;
+  font-size: 1rem !important;
+}
+
+.email-login-btn:hover {
+  background: hsl(0,0%,20%);
+}

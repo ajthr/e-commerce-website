@@ -6,6 +6,8 @@ import FacebookLogin  from 'react-facebook-login';
 
 import axios from 'axios';
 
+import Navbar from '../components/Navbar'
+
 interface props{
     history: RouteComponentProps["history"];
     location: RouteComponentProps['location'];
@@ -41,9 +43,11 @@ const LogIn = (props: props) => {
     }, [props.history])
 
     return (
-        <div className="container justify-content-center login-container">
+        <>
+        <Navbar />
+        <div className="container justify-content-center mt-5">
             <div className="d-flex flex-column align-items-center mx-3">
-                <div className="mb-5 py-2">
+                <div className="mt-5 mb-5 py-2">
                     <span className="fs-3 text-custom">
                         Welcome
                     </span>
@@ -81,6 +85,7 @@ const LogIn = (props: props) => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

@@ -12,6 +12,11 @@
   border-radius: 10px;
 }
 
+.my-10 {
+  margin-top: 6rem !important;
+  margin-bottom: 6rem !important;
+}
+
 .cursor-default {
   cursor: default !important;
 }
@@ -67,4 +72,36 @@
   background: hsl(0,0%,20%);
 }
 
+.product-image-lg {
+  min-width: 10rem;
+  min-height: 10rem;
+  max-width: 25rem;
+  max-height: 25rem;
+}
 
+label.radio {
+  cursor: pointer
+}
+
+label.radio input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none
+}
+
+label.radio span {
+  padding: 2px 9px;
+  border: 1px solid hsl(100,12%,90%);
+  display: inline-block;
+  color: black;
+  border-radius: 3px;
+  text-transform: uppercase
+}
+
+label.radio input:checked+span {
+  border-color: hsl(100,12%,95%);
+  background-color: hsl(100,12%,80%);
+  color: black
+}

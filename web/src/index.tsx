@@ -6,12 +6,16 @@ import './index.css';
 
 import Home from './pages/Home'
 import LogIn from './pages/LogIn'
+import ProductList from './pages/ProductList'
+import Product from './pages/Product'
 
 ReactDOM.render(
   <Router>
     <Switch>
       <Route path='/' component={Home} exact />
       <Route path='/login' component={LogIn} exact />
+      <Route path='/p' component={ProductList} exact />
+      <Route path='/p/:id' component={Product} exact />
     </Switch>
   </Router>,
   document.getElementById('root')

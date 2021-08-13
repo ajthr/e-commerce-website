@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom';
 
 import GoogleLogin from 'react-google-login';
 import FacebookLogin  from 'react-facebook-login';
 
 import axios from 'axios';
 
-import Navbar from '../components/Navbar'
+import { props } from '../assets/interfaces';
 
-interface props{
-    history: RouteComponentProps["history"];
-    location: RouteComponentProps['location'];
-    match: RouteComponentProps['match'];
-}
+import Navbar from '../components/Navbar'
 
 const LogIn = (props: props) => {
     const [emailInput, setEmailInput] = useState(false)

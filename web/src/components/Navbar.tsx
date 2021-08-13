@@ -1,12 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
         <nav id="navbar_top" className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow-sm">
             <div className="container-fluid mx-3">
-                <span className="fs-4 fw-bold mx-3 mb-1">
-                    E-Commerce
-                </span>
+                <Link className="text-decoration-none text-dark" to="/">
+                    <span className="fs-4 fw-bold mx-3 mb-1">
+                        E-Commerce
+                    </span>
+                </Link>
                 <button
                     className="navbar-toggler"
                     type="button"

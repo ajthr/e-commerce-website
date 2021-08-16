@@ -7,7 +7,9 @@ export interface props{
 }
 
 export interface product {
+    _id: string,
     name: string,
+    shortname: string,
     vendor: string,
     price: number,
     msrp: number,

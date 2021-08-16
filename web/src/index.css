@@ -21,6 +21,10 @@
   cursor: default !important;
 }
 
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 .google-login-btn {
   width: 17rem;
   height: 3rem !important;
@@ -72,11 +76,64 @@
   background: hsl(0,0%,20%);
 }
 
-.product-image-lg {
+.image-list {
+  min-width: 10rem;
+  min-height: 10rem;
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
+.brand-image {
+  max-height: 25rem;
+}
+
+.image-scroll {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.right-middle {
+  top: 50% !important;
+  right: 1% !important;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.left-middle {
+  top: 50% !important;
+  left: 1.7% !important;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.scroll-btn {
+  color: hsl(222, 10%, 50%);
+}
+
+.scroll-btn:hover {
+  color: hsl(222, 10%, 25%);
+}
+
+.active-image {
   min-width: 10rem;
   min-height: 10rem;
   max-width: 25rem;
   max-height: 25rem;
+}
+
+.inactive-image {
+  min-width: 3rem;
+  min-height: 3rem;
+  max-width: 10rem;
+  max-height: 10rem;
 }
 
 label.radio {

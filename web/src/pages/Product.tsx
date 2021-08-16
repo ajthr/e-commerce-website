@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from 'react'
 
+import axios from 'axios'
+
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
-import { product } from '../assets/interfaces'
+import { props, product } from '../assets/interfaces'
+import { scrollContainerLeft, scrollContainerRight } from '../assets/animations'
 
-import { SingleProduct, SimilarProducts } from '../assets/Products'
-
-const Product = () => {
+const Product = (props: props) => {
 
     const [singleProduct, setSingleProduct] = useState<product>()
     const [similarProduct, setSimilarProduct] = useState<product[]>([])
     const [imageIndex, setImageIndex] = useState<number>(0)
 
     useEffect(() => {
-        setSingleProduct(SingleProduct)
-        setSimilarProduct(SimilarProducts)
+        let { id }: any = props.match.params;
+        axios.get("http://192.168.1.7/api/products/p/" + id)
+            .then((res) => {
+                setSingleProduct(res.data)
+            })
+        axios.get("http://192.168.1.7/api/products/similar?id=" + id + "&limit=4")
+            .then((res) => {
+                setSimilarProduct(res.data)
+            })
+
     }, [])
 
     return (
@@ -25,30 +34,32 @@ const Product = () => {
                 <div className="d-flex justify-content-center">
                     <div className="p-2">
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-6 position-relative">
                                 <div className="row images p-3">
-                                    <div className="text-center p-4">
+                                    <div className="text-center p-4 image-scroll hide-scrollbar" id='image-container'>
                                         {singleProduct?.images.map((image, index) => {
                                             return (
-                                                <img className={imageIndex === index ? `col-12 m-1` : `col-3 m-1`} src={image} alt="product" onClick={() => setImageIndex(index)} />
+                                                <img className={imageIndex === index ? `active-image m-1` : `inactive-image m-1`} src={image} alt="product" onClick={() => setImageIndex(index)} />
                                             )
                                         })}
+                                        <i className="fas fa-chevron-left cursor-pointer position-absolute fs-4 scroll-btn left-middle" onClick={() => scrollContainerLeft('image-container')}></i>
+                                        <i className="fas fa-chevron-right cursor-pointer position-absolute fs-4 scroll-btn right-middle" onClick={() => scrollContainerRight('image-container')}></i>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="product p-4">
-                                    <div className="mt-4 mb-3"> <span className="text-uppercase text-muted brand">Puma</span>
+                                    <div className="mt-4 mb-3"> <span className="text-uppercase text-muted brand">{singleProduct?.vendor}</span>
                                         <h5 className="text-uppercase">{singleProduct?.name}</h5>
-                                        <div className="price d-flex flex-row align-items-center"> <span className="act-price">$20</span>
-                                            <div className="ml-2"> <span className="text-decoration-line-through mx-2">$59</span></div>
+                                        <div className="price d-flex flex-row align-items-center"> <span className="act-price">${singleProduct?.price}</span>
+                                            <div className="ml-2"> <span className="text-decoration-line-through mx-2">${singleProduct?.msrp}</span></div>
                                         </div>
                                     </div>
                                     <p className="about">{singleProduct?.description}</p>
                                     <div className="sizes mt-5">
                                         <h6 className="text-uppercase">Size</h6>
                                         <label className="radio mx-1">
-                                            <input type="radio" name="size" value="6" checked />
+                                            <input type="radio" name="size" value="6" />
                                             <span>6</span>
                                         </label>
                                         <label className="radio mx-1">
@@ -81,10 +92,10 @@ const Product = () => {
                     <div className="row">
                         {similarProduct.map((product) => (
                             <div className="col-md-6 col-lg-3 col-xl-3 my-3">
-                                <img className="w-100" src={product.images[0]} alt="shoe" />
+                                <img className="image-list" src={product.images[0]} alt="shoe" />
                                 <div className="m-2">
                                     <div className="fs-5 fw-bold text-uppercase">{product.vendor}</div>
-                                    <div className="fs-6 fw-normal text-capitalize">{product.name}</div>
+                                    <div className="fs-6 fw-normal text-capitalize">{product.shortname}</div>
                                     <div className="fs-6 fw-bold my-1 mr-2">
                                         <span>${product.price}</span>
                                         <span className="text-decoration-line-through mx-2">${product.msrp}</span>

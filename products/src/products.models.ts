@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
+    createdAt: Date,
     name: String,
     category: String,
     description: String,
@@ -15,9 +16,7 @@ const productSchema = new mongoose.Schema({
         specification: String,
         value: String
     }],
-    images: [{
-        url: String
-    }]
+    images: [String]
 });
 
 const Product = mongoose.model('Product', productSchema);

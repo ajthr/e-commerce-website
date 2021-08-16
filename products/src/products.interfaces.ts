@@ -1,5 +1,6 @@
 export interface product {
     _id: string,
+    createdAt: Date,
     name: string,
     category: string,
     description: string,
@@ -14,7 +15,5 @@ export interface product {
         specification: string,
         value: string
     }],
-    images: [{
-        url: string
-    }]
+    images: string[]
 }

@@ -6,7 +6,6 @@ import router from './products.routes'
 const app: Application = express()
 
 app.use(urlencoded({ extended:true }))
-console.log("uri", process.env.DB_URI);
 
 mongoose.connect(<string>process.env.DB_URI), {
 	useNewUrlParser: true,
@@ -15,5 +14,7 @@ mongoose.connect(<string>process.env.DB_URI), {
 	useCreateIndex: true,
 };
 
-app.use('/', router)
-app.listen(5000, ():void => console.log('Server up and running'))
+app.use('/', router);
+app.use(express.json());
+app.use(express.urlencoded());
+app.listen(5000, ():void => console.log('Server up and running'));

@@ -1,0 +1,52 @@
+name: deploy
+
+on:
+  push:
+    branches: [production]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deploy Web Client
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_CLIENT_APP_NAME }}
+          dockerfile_directory: ./web
+          dockerfile_name: Dockerfile.production
+          docker_options: "--no-cache"
+          process_type: web
+      - name: Deploy Auth Service
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_AUTH_APP_NAME }}
+          dockerfile_directory: ./auth
+          dockerfile_name: Dockerfile.production
+          docker_options: "--no-cache"
+          process_type: web
+      - name: Deploy Products Service
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_PRODUCTS_APP_NAME }}
+          dockerfile_directory: ./products
+          dockerfile_name: Dockerfile.production
+          docker_options: "--no-cache"
+          process_type: web
+      - name: Deploy Nginx Server
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_NGINX_APP_NAME }}
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile.production
+          docker_options: "--no-cache"
+          process_type: web

@@ -14,23 +14,23 @@ const LogIn = (props: props) => {
     const [email, setEmail] = useState("")
 
     const handleGoogleLogin = (googleData: any) => {
-        axios.post("http://192.168.1.7/api/auth/openid/", googleData.profileObj)
+        axios.post("http://localhost/api/auth/openid/", googleData.profileObj)
             .then(() => props.history.push('/'))
     }
 
     const handleFacebookLogin = (facebookData: any) => {
-        axios.post("http://192.168.1.7/api/auth/openid/", facebookData)
+        axios.post("http://localhost/api/auth/openid/", facebookData)
             .then(() => props.history.push('/'))
     }
 
     const sendEmail = () => {
-        axios.post("http://192.168.1.7/api/auth/sendmail/", {
+        axios.post("http://localhost/api/auth/sendmail/", {
             "email": email
         }).catch(err => console.log(err))
     }
 
     useEffect(() => {
-        axios.get("http://192.168.1.7/api/auth/isauthenticated/").then((res) => {
+        axios.get("http://localhost/api/auth/isauthenticated/").then((res) => {
             if (res.status === 200) {
                 props.history.push('/')
             }

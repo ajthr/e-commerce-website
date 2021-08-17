@@ -21,7 +21,7 @@ const ProductList = (props: props) => {
     }
 
     useEffect(() => {
-        axios.get("http://192.168.1.7/api/products" + props.location.search)
+        axios.get("http://localhost/api/products" + props.location.search)
         .then((res) => {
             setProducts(res.data)
         })

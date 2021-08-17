@@ -17,7 +17,7 @@ const Home = (props: props) => {
     const [topBrands, setTopBrands] = useState<brand[]>([])
 
     useEffect(() => {
-        axios.get("http://192.168.1.7/api/products/latest?limit=4")
+        axios.get("http://localhost/api/products/latest?limit=4")
             .then((res) => {
                 setLatestArrivals(res.data)
             })

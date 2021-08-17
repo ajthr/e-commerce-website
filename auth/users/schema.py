@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from marshmallow import Schema, fields
+from flask_marshmallow import Schema
+from marshmallow import fields
 
 
 class UserSchema(Schema):

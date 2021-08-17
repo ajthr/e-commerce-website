@@ -16,11 +16,11 @@ const Product = (props: props) => {
 
     useEffect(() => {
         let { id }: any = props.match.params;
-        axios.get("http://192.168.1.7/api/products/p/" + id)
+        axios.get("http://localhost/api/products/p/" + id)
             .then((res) => {
                 setSingleProduct(res.data)
             })
-        axios.get("http://192.168.1.7/api/products/similar?id=" + id + "&limit=4")
+        axios.get("http://localhost/api/products/similar?id=" + id + "&limit=4")
             .then((res) => {
                 setSimilarProduct(res.data)
             })

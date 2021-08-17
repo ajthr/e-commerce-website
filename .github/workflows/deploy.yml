@@ -17,7 +17,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_CLIENT_APP_NAME }}
           dockerfile_directory: ./web
-          dockerfile_name: Dockerfile.production
+          dockerfile_name: dockerfile.production
           docker_options: "--no-cache"
           process_type: web
       - name: Deploy Auth Service
@@ -27,7 +27,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_AUTH_APP_NAME }}
           dockerfile_directory: ./auth
-          dockerfile_name: Dockerfile.production
+          dockerfile_name: dockerfile.production
           docker_options: "--no-cache"
           process_type: web
       - name: Deploy Products Service
@@ -37,7 +37,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_PRODUCTS_APP_NAME }}
           dockerfile_directory: ./products
-          dockerfile_name: Dockerfile.production
+          dockerfile_name: dockerfile.production
           docker_options: "--no-cache"
           process_type: web
       - name: Deploy Nginx Server
@@ -47,6 +47,6 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_NGINX_APP_NAME }}
           dockerfile_directory: ./
-          dockerfile_name: Dockerfile.production
+          dockerfile_name: dockerfile.production
           docker_options: "--no-cache"
           process_type: web

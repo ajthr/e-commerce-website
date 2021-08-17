@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 
 from flask import Blueprint, request, make_response
 
-from config import db
+from config import db, settings
 from users.models import User
 from users.schema import user_schema
 
@@ -54,7 +54,7 @@ def smtp_server(receiver_email, subject, html_content):
     message.attach(text)
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as \
-        server:
+            server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email,
                         message.as_string())
@@ -105,27 +105,18 @@ def email_login():
         if session_id is None:
             receiver_email = request.json['email']
             token = jwt.encode({'email': receiver_email,
-                            'exp': datetime.datetime.utcnow()
-                            + datetime.timedelta(seconds=30)},
-                            private_key, algorithm='RS256')
+                                'exp': datetime.datetime.utcnow()
+                                + datetime.timedelta(minutes=30)},
+                               private_key, algorithm='RS256')
             subject = 'Email Verification'
+            uri = str(os.environ.get("URI"))
             content = \
-                """\
-                    <html>
-                    <body>
-                        <p>
-                        Click the below link to verify to your email
-                        <a href="http://localhost/login/email_verification/?token=""" \
-                + token + """ \
-                        ">Login</a>
-                        </p>
-                    </body>
-                    </html>
-                    """
+                "<html><body><p>Click the below link to verify to your email<a href='" + uri + "login/email_verification/?token=" + token + "'>Login</a></p></body></html>"
             return smtp_server(receiver_email, subject, content)
         return make_response('', 200)
     except:
         return make_response('', 500)
+
 
 @users_blueprint.route('/verifyemail/', methods=['POST'])
 def verify_email():
@@ -133,7 +124,7 @@ def verify_email():
     try:
         payload = jwt.decode(token, public_key, algorithms=['RS256'])
         return authenticate(payload['email'], payload['email'].split('@'
-                            )[0])
+                                                                     )[0])
     except:
         return make_response('', 401)
 

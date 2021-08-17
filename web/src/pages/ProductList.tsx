@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 
 import { props, product } from '../assets/interfaces'
 
-import { sortBy } from '../assets/constants'
+import { baseUri, sortBy } from '../assets/constants'
 import { Brands, Colors } from '../assets/Products'
 
 const ProductList = (props: props) => {
@@ -20,14 +20,18 @@ const ProductList = (props: props) => {
         // todo
     }
 
-    useEffect(() => {
-        axios.get("http://localhost/api/products" + props.location.search)
+    const getProducts = (searchTerm: string) => {
+        axios.get(baseUri + "/api/products/" + searchTerm)
         .then((res) => {
             setProducts(res.data)
         })
+    }
+
+    useEffect(() => {
+        getProducts(props.location.search);
         setBrands(Brands)
         setColors(Colors)
-    }, [])
+    }, [props.location.search])
 
     return (
         <>

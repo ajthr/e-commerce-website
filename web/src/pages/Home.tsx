@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 
 import { props, brand, category, product } from '../assets/interfaces'
 
-import { heroImage, features } from '../assets/constants'
+import { baseUri, heroImage, features } from '../assets/constants'
 import { CategoriesToBag, TopBrands } from '../assets/Products'
 
 const Home = (props: props) => {
@@ -17,7 +17,7 @@ const Home = (props: props) => {
     const [topBrands, setTopBrands] = useState<brand[]>([])
 
     useEffect(() => {
-        axios.get("http://localhost/api/products/latest?limit=4")
+        axios.get(baseUri + "/api/products/latest?limit=4")
             .then((res) => {
                 setLatestArrivals(res.data)
             })

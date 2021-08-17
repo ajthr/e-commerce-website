@@ -47,52 +47,9 @@ def flask_test():
     os.system("python -m unittest discover")
 
 
-@app.cli.command("create-app")
-@click.argument("app")
-def flask_create_app(app):
-    file_tree = [
-        {
-            "filename": "/__init__.py",
-            "permission": "x",
-            "content": ""
-        },
-        {
-            "filename": "/models.py",
-            "permission": "w+",
-            "content": "from config import db\n\n# create your models here"
-        },
-        {
-            "filename": "/routes.py",
-            "permission": "w+",
-            "content": "from flask import Blueprint\n\n{}_blueprint = Blueprint('{}', __name__)\n\n# create your routes here.".format(app, app)
-        },
-        {
-            "filename": "/schema.py",
-            "permission": "w+",
-            "content": "from flask_marshmallow import Schema\n\n# create your schema here"
-        },
-    ]
-    if os.path.isdir(app):
-        click.echo(
-            "Error: Directory exist: {}/{} already exists.".format(os.getcwd(), app), err=True)
-    else:
-        basedir = '/'.join([os.getcwd(), app])
-        os.mkdir(basedir)
-        for file in file_tree:
-            f = open(basedir + file.get("filename"), file.get("permission"))
-            if file.get("content") != "":
-                f.write(file.get("content"))
-            f.close()
-
 @app.cli.command("deploy")
 @click.option("-h", "--host", "host", default="0.0.0.0")
 @click.option("-p", "--port", "port", default=5000)
 @click.option("-w", "--workers", "workers", default=1)
-@click.option("-k", "--worker-class", "worker_class", default="sync")
-@click.option("-n", "--name", "app_name")
-@click.option("-c", "--config", "config")
-def flask_deploy(host, port, workers, worker_class, app_name, config):
-    if config is not None:
-        os.system("gunicorn -w {} -b {}:{} -k {} -n {} -c {} app:app".format(workers, host, port, worker_class, app_name, config))
-    else:
-        os.system("gunicorn -w {} -b {}:{} -k {} -n {} app:app".format(workers, host, port, worker_class, app_name))
+def flask_deploy(host, port, workers):
+    os.system("gunicorn -w {} -b {}:{} app:app".format(workers, host, port))

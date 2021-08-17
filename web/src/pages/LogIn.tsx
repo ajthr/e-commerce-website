@@ -5,6 +5,7 @@ import FacebookLogin  from 'react-facebook-login';
 
 import axios from 'axios';
 
+import { baseUri } from '../assets/constants';
 import { props } from '../assets/interfaces';
 
 import Navbar from '../components/Navbar'
@@ -14,23 +15,23 @@ const LogIn = (props: props) => {
     const [email, setEmail] = useState("")
 
     const handleGoogleLogin = (googleData: any) => {
-        axios.post("http://localhost/api/auth/openid/", googleData.profileObj)
+        axios.post(baseUri + "/api/auth/openid/", googleData.profileObj)
             .then(() => props.history.push('/'))
     }
 
     const handleFacebookLogin = (facebookData: any) => {
-        axios.post("http://localhost/api/auth/openid/", facebookData)
+        axios.post(baseUri + "/api/auth/openid/", facebookData)
             .then(() => props.history.push('/'))
     }
 
     const sendEmail = () => {
-        axios.post("http://localhost/api/auth/sendmail/", {
+        axios.post(baseUri + "/api/auth/sendmail/", {
             "email": email
         }).catch(err => console.log(err))
     }
 
     useEffect(() => {
-        axios.get("http://localhost/api/auth/isauthenticated/").then((res) => {
+        axios.get(baseUri + "/api/auth/isauthenticated/").then((res) => {
             if (res.status === 200) {
                 props.history.push('/')
             }

@@ -1,0 +1,11 @@
+FROM node:16.5-slim
+
+WORKDIR /usr/src/api/products
+
+COPY . .
+
+RUN npm install
+
+RUN npm run build
+
+CMD npm run start

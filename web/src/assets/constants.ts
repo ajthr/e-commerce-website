@@ -2,6 +2,8 @@
 
 import { menu } from './interfaces'
 
+export const baseUri: string = window.location.origin
+
 export const heroImage: string = "https://source.unsplash.com/jLEGurepDco/1600x800"
 
 export const menMenu: menu[] = [

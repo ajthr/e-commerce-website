@@ -5,6 +5,7 @@ import axios from 'axios'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
+import { baseUri } from '../assets/constants'
 import { props, product } from '../assets/interfaces'
 import { scrollContainerLeft, scrollContainerRight } from '../assets/animations'
 
@@ -14,18 +15,21 @@ const Product = (props: props) => {
     const [similarProduct, setSimilarProduct] = useState<product[]>([])
     const [imageIndex, setImageIndex] = useState<number>(0)
 
-    useEffect(() => {
-        let { id }: any = props.match.params;
-        axios.get("http://localhost/api/products/p/" + id)
+    const getProduct = (id: string) => {
+        axios.get(baseUri + "/api/products/p/" + id)
             .then((res) => {
                 setSingleProduct(res.data)
             })
-        axios.get("http://localhost/api/products/similar?id=" + id + "&limit=4")
+        axios.get(baseUri + "/api/products/similar?id=" + id + "&limit=4")
             .then((res) => {
                 setSimilarProduct(res.data)
             })
+    }
 
-    }, [])
+    useEffect(() => {
+        let { id }: any = props.match.params;
+        getProduct(id);
+    }, [props.match.params])
 
     return (
         <>
@@ -90,9 +94,9 @@ const Product = (props: props) => {
                 <span className="mx-5 fs-4 fw-bold">Similar products</span>
                 <div className="m-5">
                     <div className="row">
-                        {similarProduct.map((product) => (
+                        {similarProduct.map((product, index) => (
                             <div className="col-md-6 col-lg-3 col-xl-3 my-3">
-                                <img className="image-list" src={product.images[0]} alt="shoe" />
+                                <img className="image-list" src={product.images[0]} alt="shoe" key={index} onClick={() => props.history.push("/p/" + product._id)} />
                                 <div className="m-2">
                                     <div className="fs-5 fw-bold text-uppercase">{product.vendor}</div>
                                     <div className="fs-6 fw-normal text-capitalize">{product.shortname}</div>

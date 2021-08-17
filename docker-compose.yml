@@ -5,6 +5,7 @@ services:
         container_name: ec_web_client
         build:
             context: ./web
+            dockerfile: dockerfile
         stdin_open: true
         volumes:
             - ./web:/usr/src/web
@@ -12,6 +13,7 @@ services:
         environment: 
             - REACT_APP_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
             - REACT_APP_FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
+            - REACT_APP_URI=${DEV_URI}
         ports:
             - "3000"
         command: >
@@ -20,14 +22,15 @@ services:
         container_name: ec_auth_service
         build: 
             context: ./auth
+            dockerfile: dockerfile
         ports: 
             - "5000"
         volumes: 
             - ./auth:/usr/src/auth
         command: >
-            sh -c "python manage.py init &&
-                    python manage.py migrate &&
-                    python manage.py runserver"
+            sh -c "flask make &&
+                    flask migrate &&
+                    flask run"
         environment: 
             - DATABASE_HOST=${DB_HOST}
             - DATABASE_NAME=${DB_NAME}
@@ -36,10 +39,12 @@ services:
             - DATABASE_USER=${DB_USER}
             - DATABASE_PASSWORD=${DB_PASSWORD}
             - EMAIL_PWD=${EMAIL_PWD}
+            - URI={$DEV_URI}
     products:
         container_name: ec_products_service
         build:
             context: ./products
+            dockerfile: dockerfile
         volumes: 
                 - ./products:/usr/src/api/products
                 - ./products/node_modules:/usr/src/api/products/node_modules

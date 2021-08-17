@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { baseUri } from '../assets/constants';
 import { props } from '../assets/interfaces'
 
 import axios from 'axios';
@@ -17,7 +18,7 @@ const VerifyEmail = (props: props) => {
     let query = useQuery();
 
     const verify = async(token: string| null) => {
-        await axios.post('http://localhost/api/auth/verifyemail/', {
+        await axios.post(baseUri + "/api/auth/verifyemail/", {
             "token": token
         }).then(() => {
             setVerified(1)
@@ -26,7 +27,7 @@ const VerifyEmail = (props: props) => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost/api/auth/isauthenticated/").then((res) => {
+        axios.get(baseUri + "/api/auth/isauthenticated/").then((res) => {
             if (res.status === 200) {
                 props.history.push('/')
             }

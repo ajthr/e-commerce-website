@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-            - name: Build services
+      - name: Build services
         run: docker-compose up -d
         env:
           REACT_APP_GOOGLE_CLIENT_ID: ${secrets.GOOGLE_CLIENT_ID}
@@ -24,7 +24,6 @@ jobs:
           EMAIL_PWD: ${secrets.EMAIL_PWD}
           URI: ${secrets.$DEV_URI}
           DB_URI: ${secrets.MONGO_DB_URI}
-
       - name: Deploy Web Client
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:

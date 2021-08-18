@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import axios, { AxiosError } from "axios";
+
+import { baseUri } from "../assets/constants";
+
+import { ApiContext } from '../contexts/ApiContext'
+
 const Navbar = () => {
+    const { user, setModal, setUser } = useContext(ApiContext);
+
+    const logout = () => {
+        axios.post(baseUri + "/api/auth/logout/")
+            .then(() => {
+                setUser?.(false);
+            })
+            .catch((err: AxiosError) => console.log(err))
+    }
+
     return (
         <nav id="navbar_top" className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow-sm">
             <div className="container-fluid mx-3">
@@ -119,40 +135,45 @@ const Navbar = () => {
                                 />
                             </div>
                         </li>
-                        <li className="nav-item dropdown mx-1">
-                            <span
-                                className="nav-link dropdown-toggle"
-                                id="navbarDarkDropdownMenuLink"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                <i className="fas fa-user mx-2"></i>Profile
-                            </span>
-                            <ul
-                                className="dropdown-menu"
-                                aria-labelledby="navbarDarkDropdownMenuLink"
-                            >
-                                <li>
-                                    <span className="dropdown-item">Orders</span>
+                        {!user && <button className="py-1 px-2 rounded btn-login text-capitalize shadow-none h-25" onClick={() => setModal?.(true)}>login</button>}
+                        {user &&
+                            <>
+                                <li className="nav-item dropdown">
+                                    <span
+                                        className="nav-link dropdown-toggle me-4"
+                                        id="navbarDarkDropdownMenuLink"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        <i className="fas fa-user mx-2"></i>Profile
+                                    </span>
+                                    <ul
+                                        className="dropdown-menu"
+                                        aria-labelledby="navbarDarkDropdownMenuLink"
+                                    >
+                                        <li>
+                                            <span className="dropdown-item">Orders</span>
+                                        </li>
+                                        <li>
+                                            <span className="dropdown-item">Contact Us</span>
+                                        </li>
+                                        <hr />
+                                        <li>
+                                            <span className="dropdown-item">Edit Profile</span>
+                                        </li>
+                                        <li>
+                                            <span onClick={() => logout()} className="dropdown-item">Logout</span>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <span className="dropdown-item">Contact Us</span>
+                                <li className="nav-item mx-1">
+                                    <span className="nav-link">
+                                        <i className="fas fa-shopping-cart mx-2"></i>Cart
+                                    </span>
                                 </li>
-                                <hr />
-                                <li>
-                                    <span className="dropdown-item">Edit Profile</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Logout</span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li className="nav-item mx-1">
-                            <span className="nav-link">
-                                <i className="fas fa-shopping-cart mx-2"></i>Cart
-                            </span>
-                        </li>
+                            </>
+                        }
                     </ul>
                 </div>
             </div>

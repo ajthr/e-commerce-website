@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Navbar from '../components/Navbar'
+import Loader from '../components/Loader'
 import Footer from '../components/Footer'
 
 import { props, product } from '../assets/interfaces'
@@ -15,6 +16,7 @@ const ProductList = (props: props) => {
     const [products, setProducts] = useState<product[]>([])
     const [brands, setBrands] = useState<string[]>([])
     const [colors, setColors] = useState<string[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
 
     const filterProducts = (category: string, value: string) => {
         // todo
@@ -24,6 +26,7 @@ const ProductList = (props: props) => {
         axios.get(baseUri + "/api/products/" + searchTerm)
         .then((res) => {
             setProducts(res.data)
+            setLoading(false)
         })
     }
 
@@ -36,6 +39,9 @@ const ProductList = (props: props) => {
     return (
         <>
             <Navbar />
+            {loading && <Loader />}
+            {!loading && 
+                <>
             <div className="mx-5 my-10">
                 <div className="row py-2 border-bottom">
                     <div className="col-xl-2 col-lg-3 col-md-4 col-sm-5">
@@ -105,6 +111,8 @@ const ProductList = (props: props) => {
                 </div >
             </div >
             <Footer />
+            </>
+            }
         </>
     )
 }

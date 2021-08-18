@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Navbar from '../components/Navbar'
+import Loader from '../components/Loader'
 import Footer from '../components/Footer'
 
 import { baseUri } from '../assets/constants'
@@ -14,11 +15,13 @@ const Product = (props: props) => {
     const [singleProduct, setSingleProduct] = useState<product>()
     const [similarProduct, setSimilarProduct] = useState<product[]>([])
     const [imageIndex, setImageIndex] = useState<number>(0)
+    const [loading, setLoading] = useState<boolean>(true)
 
     const getProduct = (id: string) => {
         axios.get(baseUri + "/api/products/p/" + id)
             .then((res) => {
                 setSingleProduct(res.data)
+                setLoading(false)
             })
         axios.get(baseUri + "/api/products/similar?id=" + id + "&limit=4")
             .then((res) => {
@@ -34,6 +37,9 @@ const Product = (props: props) => {
     return (
         <>
             <Navbar />
+            {loading && <Loader />}
+            {!loading && 
+                <>
             <section className="container-fluid my-5">
                 <div className="d-flex justify-content-center">
                     <div className="p-2">
@@ -111,6 +117,8 @@ const Product = (props: props) => {
                 </div>
             </section>
             <Footer />
+            </>
+            }
         </>
     )
 }

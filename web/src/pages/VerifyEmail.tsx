@@ -6,6 +6,7 @@ import { baseUri } from '../assets/constants';
 import { props } from '../assets/interfaces'
 
 import axios from 'axios';
+import Loader from '../components/Loader';
 
 const VerifyEmail = (props: props) => {
 
@@ -37,7 +38,7 @@ const VerifyEmail = (props: props) => {
     }, [])
     return (
         <div>
-            {verified === 0 && <h1>Verifying</h1>}
+            <Loader />
         </div>
     )
 }

@@ -43,7 +43,6 @@ router.get('/latest', async (request: Request, response: Response): Promise<void
 
 router.get('/similar', async (request: Request, response: Response): Promise<void> => {
     const { id, limit }: any = request.query;
-    console.log(id, limit);
     try {
         let category: product | null = await Product.findOne({
             _id: id,

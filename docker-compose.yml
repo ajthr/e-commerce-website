@@ -30,7 +30,7 @@ services:
         command: >
             sh -c "flask make &&
                     flask migrate &&
-                    flask run"
+                    flask run --host=0.0.0.0"
         environment: 
             - DATABASE_HOST=${DB_HOST}
             - DATABASE_NAME=${DB_NAME}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory, useParams } from 'react-router'
 
 import axios from 'axios'
 
@@ -7,10 +8,13 @@ import Loader from '../components/Loader'
 import Footer from '../components/Footer'
 
 import { baseUri } from '../assets/constants'
-import { props, product } from '../assets/interfaces'
+import { product } from '../assets/interfaces'
 import { scrollContainerLeft, scrollContainerRight } from '../assets/animations'
 
-const Product = (props: props) => {
+const Product = (props: any) => {
+
+    const history = useHistory()
+    const { id }: { id: string } = useParams()
 
     const [singleProduct, setSingleProduct] = useState<product>()
     const [similarProduct, setSimilarProduct] = useState<product[]>([])
@@ -30,9 +34,8 @@ const Product = (props: props) => {
     }
 
     useEffect(() => {
-        let { id }: any = props.match.params;
         getProduct(id);
-    }, [props.match.params])
+    }, [id])
 
     return (
         <>
@@ -102,7 +105,7 @@ const Product = (props: props) => {
                     <div className="row">
                         {similarProduct.map((product, index) => (
                             <div className="col-md-6 col-lg-3 col-xl-3 my-3">
-                                <img className="image-list" src={product.images[0]} alt="shoe" key={index} onClick={() => props.history.push("/p/" + product._id)} />
+                                <img className="image-list" src={product.images[0]} alt="shoe" key={index} onClick={() => history.push("/p/" + product._id)} />
                                 <div className="m-2">
                                     <div className="fs-5 fw-bold text-uppercase">{product.vendor}</div>
                                     <div className="fs-6 fw-normal text-capitalize">{product.shortname}</div>

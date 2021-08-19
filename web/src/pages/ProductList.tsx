@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router'
 
 import axios from 'axios'
 
@@ -6,12 +7,15 @@ import Navbar from '../components/Navbar'
 import Loader from '../components/Loader'
 import Footer from '../components/Footer'
 
-import { props, product } from '../assets/interfaces'
+import { product } from '../assets/interfaces'
 
 import { baseUri, sortBy } from '../assets/constants'
 import { Brands, Colors } from '../assets/Products'
 
-const ProductList = (props: props) => {
+const ProductList = () => {
+
+    const history = useHistory();
+    const { search } = useLocation();
 
     const [products, setProducts] = useState<product[]>([])
     const [brands, setBrands] = useState<string[]>([])
@@ -31,10 +35,10 @@ const ProductList = (props: props) => {
     }
 
     useEffect(() => {
-        getProducts(props.location.search);
+        getProducts(search);
         setBrands(Brands)
         setColors(Colors)
-    }, [props.location.search])
+    }, [search])
 
     return (
         <>
@@ -95,7 +99,7 @@ const ProductList = (props: props) => {
                     <div className="col-xl-10 col-lg-9 col-md-8 col-sm-7">
                         <div className="row p-2">
                             {products.map((product, index) => (
-                                <div className="col-xl-3 col-lg-3 col-md-4 cursor-pointer" key={index} onClick={() => props.history.push("/p/" + product._id)}>
+                                <div className="col-xl-3 col-lg-3 col-md-4 cursor-pointer" key={index} onClick={() => history.push("/p/" + product._id)}>
                                     <img className="card-img-top" src={product.images[0]} alt="product" />
                                     <div className="p-2">
                                         <div className="fs-5 fw-bold text-uppercase">{product.vendor}</div>

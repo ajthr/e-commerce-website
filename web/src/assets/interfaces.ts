@@ -1,12 +1,4 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
-
-export interface props {
-    history: RouteComponentProps["history"];
-    location: RouteComponentProps['location'];
-    match: RouteComponentProps['match'];
-    children: React.ReactNode;
-}
 
 export interface context {
     user: boolean | null,

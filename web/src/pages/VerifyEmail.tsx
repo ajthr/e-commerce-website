@@ -1,16 +1,17 @@
 
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import { baseUri } from '../assets/constants';
-import { props } from '../assets/interfaces'
 
 import axios from 'axios';
 import Loader from '../components/Loader';
 
-const VerifyEmail = (props: props) => {
+const VerifyEmail = (props: any) => {
 
-    const [verified, setVerified] = useState(0)
+    const history = useHistory();
+
+    const [verified, setVerified] = useState<boolean>(false);
 
     const useQuery = () => {
         return new URLSearchParams(useLocation().search);
@@ -18,24 +19,27 @@ const VerifyEmail = (props: props) => {
 
     let query = useQuery();
 
-    const verify = async(token: string| null) => {
-        await axios.post(baseUri + "/api/auth/verifyemail/", {
-            "token": token
-        }).then(() => {
-            setVerified(1)
-            props.history.push('/')
-        }).catch(() => props.history.push('/'))
+    const verify = async (token: string | null) => {
+        if (!verified) {
+            await axios.post(baseUri + "/api/auth/verifyemail/", {
+                "token": token
+            }).then(() => {
+                setVerified(true)
+                history.push('/')
+            }).catch(() => history.push('/'))
+        }
     }
 
     useEffect(() => {
         axios.get(baseUri + "/api/auth/isauthenticated/").then((res) => {
             if (res.status === 200) {
-                props.history.push('/')
+                history.push('/')
             }
         })
         const token: string | null = query.get("token")
         verify(token)
     }, [])
+
     return (
         <div>
             <Loader />

@@ -9,7 +9,7 @@ import VerifyEmail from './pages/VerifyEmail'
 import ProductList from './pages/ProductList'
 import Product from './pages/Product'
 
-import ApiProvider from './contexts/ApiContext';
+import ApiProvider from './contexts/ApiContext'
 
 ReactDOM.render(
   <ApiProvider>

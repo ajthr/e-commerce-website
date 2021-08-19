@@ -1,6 +1,6 @@
 // contains temperory constants for development
 
-import { brand, product } from './interfaces'
+import { brand } from './interfaces'
 
 export const CategoriesToBag: { name: string, image: string }[] = [
     { name: "sneakers", image: "https://source.unsplash.com/JM-qKEd1GMI" },

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from "react-router-dom";
 
 import axios from 'axios'
 
@@ -7,14 +8,16 @@ import Loader from '../components/Loader'
 import Login from '../components/Login'
 import Footer from '../components/Footer'
 
-import { props, brand, category, product } from '../assets/interfaces'
+import { brand, category, product } from '../assets/interfaces'
 
 import { baseUri, heroImage, features } from '../assets/constants'
 import { CategoriesToBag, TopBrands } from '../assets/Products'
 
 import { ApiContext } from '../contexts/ApiContext';
 
-const Home = (props: props) => {
+const Home = () => {
+
+    const history = useHistory();
 
     const [categoriesToBag, setCategoriesToBag] = useState<category[]>([])
     const [latestArrivals, setLatestArrivals] = useState<product[]>([])
@@ -37,7 +40,7 @@ const Home = (props: props) => {
         <>
             <Navbar />
             <Login />
-            <div className={modal? "blur h-100" : " h-100"}>
+            <div className={modal ? "blur h-100" : " h-100"}>
                 {loading && <Loader />}
                 {!loading &&
                     <>
@@ -62,7 +65,7 @@ const Home = (props: props) => {
                                 <div className="row">
                                     {categoriesToBag.map((category, index) => {
                                         return (
-                                            <div className="col-md-6 col-lg-3 col-xl-3 my-3 p-1" key={index} onClick={() => { props.history.push("/p?category=" + category.name) }}>
+                                            <div className="col-md-6 col-lg-3 col-xl-3 my-3 p-1" key={index} onClick={() => { history.push("/p?category=" + category.name) }}>
                                                 <img className="w-100" src={category.image} alt="shoe" />
                                                 <div className="m-2">
                                                     <div className="fs-6 text-uppercase text-center">{category.name}</div>
@@ -79,7 +82,7 @@ const Home = (props: props) => {
                                 <div className="row">
                                     {latestArrivals.map((product, index) => {
                                         return (
-                                            <div className="col-md-6 col-lg-3 col-xl-3 my-3 text-center" key={index} onClick={() => props.history.push("/p/" + product._id)}>
+                                            <div className="col-md-6 col-lg-3 col-xl-3 my-3 text-center" key={index} onClick={() => history.push("/p/" + product._id)}>
                                                 <img className="image-list" src={product.images[0]} alt="shoe" />
                                                 <div className="m-2">
                                                     <div className="fs-5 fw-bold text-uppercase">{product.vendor}</div>
@@ -98,7 +101,7 @@ const Home = (props: props) => {
                                 <div className="row">
                                     {topBrands.map((brand, index) => {
                                         return (
-                                            <div className="col-md-6 col-lg-3 col-xl-3 my-3 p-1 text-center" key={index} onClick={() => { props.history.push("/p?vendor=" + brand.name) }}>
+                                            <div className="col-md-6 col-lg-3 col-xl-3 my-3 p-1 text-center" key={index} onClick={() => { history.push("/p?vendor=" + brand.name) }}>
                                                 <img className="brand-image" src={brand.image} alt="shoe" />
                                             </div>
                                         )

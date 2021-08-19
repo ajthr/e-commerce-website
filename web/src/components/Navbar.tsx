@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import axios, { AxiosError } from "axios";
@@ -140,7 +140,7 @@ const Navbar = () => {
                             <>
                                 <li className="nav-item dropdown">
                                     <span
-                                        className="nav-link dropdown-toggle me-4"
+                                        className="nav-link dropdown-toggle"
                                         id="navbarDarkDropdownMenuLink"
                                         role="button"
                                         data-bs-toggle="dropdown"
@@ -167,7 +167,7 @@ const Navbar = () => {
                                         </li>
                                     </ul>
                                 </li>
-                                <li className="nav-item mx-1">
+                                <li className="nav-item">
                                     <span className="nav-link">
                                         <i className="fas fa-shopping-cart mx-2"></i>Cart
                                     </span>

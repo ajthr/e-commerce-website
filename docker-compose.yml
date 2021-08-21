@@ -39,7 +39,7 @@ services:
             - DATABASE_USER=${DB_USER}
             - DATABASE_PASSWORD=${DB_PASSWORD}
             - EMAIL_PWD=${EMAIL_PWD}
-            - URI={$DEV_URI}
+            - URI=${DEV_URI}
     products:
         container_name: ec_products_service
         build:
@@ -48,6 +48,20 @@ services:
         volumes: 
                 - ./products:/usr/src/api/products
                 - ./products/node_modules:/usr/src/api/products/node_modules
+        ports:
+            - "5000"
+        command: >
+            sh -c "npm run dev"
+        environment:
+            DB_URI: ${MONGO_DB_URI}
+    cart:
+        container_name: ec_cart_service
+        build:
+            context: ./cart
+            dockerfile: dockerfile
+        volumes: 
+                - ./cart:/usr/src/api/cart
+                - ./cart/node_modules:/usr/src/api/cart/node_modules
         ports:
             - "5000"
         command: >
@@ -65,3 +79,4 @@ services:
             - web
             - auth
             - products
+            - cart

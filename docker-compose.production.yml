@@ -33,7 +33,7 @@ services:
             - DATABASE_USER=${DB_USER}
             - DATABASE_PASSWORD=${DB_PASSWORD}
             - EMAIL_PWD=${EMAIL_PWD}
-            - URI={$DEV_URI}
+            - URI=${DEV_URI}
             - PORT=5000
     products:
         container_name: ec_products_service

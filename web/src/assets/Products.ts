@@ -15,17 +15,3 @@ export const TopBrands: brand[] = [
     { name: "puma", image: "https://assets.myntassets.com/f_webp,w_196,c_limit,fl_progressive,dpr_2.0/assets/images/2020/8/31/581e2bf6-6d47-4a4b-a11f-43200dc9c6791598892519362-Puma.jpg" },
     { name: "roadster", image: "https://assets.myntassets.com/f_webp,w_196,c_limit,fl_progressive,dpr_2.0/assets/images/2020/8/5/178c1e5d-69f2-402f-a2a5-ef44700a0f691596640983793-Roadster---.jpg" }
 ]
-
-export const Brands: string[] = [
-    "nike",
-    "adidas",
-    "puma",
-    "roadster"
-]
-
-export const Colors: string[] = [
-    "black",
-    "white",
-    "red",
-    "green"
-]

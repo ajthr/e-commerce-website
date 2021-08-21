@@ -52,7 +52,7 @@ const Product = (props: any) => {
                                     <div className="text-center p-4 image-scroll hide-scrollbar" id='image-container'>
                                         {singleProduct?.images.map((image, index) => {
                                             return (
-                                                <img className={imageIndex === index ? `active-image m-1` : `inactive-image m-1`} src={image} alt="product" onClick={() => setImageIndex(index)} />
+                                                <img key={index} className={imageIndex === index ? `active-image m-1` : `inactive-image m-1`} src={image} alt="product" onClick={() => setImageIndex(index)} />
                                             )
                                         })}
                                         <i className="fas fa-chevron-left cursor-pointer position-absolute fs-4 scroll-btn left-middle" onClick={() => scrollContainerLeft('image-container')}></i>

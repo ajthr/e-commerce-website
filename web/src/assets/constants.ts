@@ -1,6 +1,6 @@
 // constant values
 
-import { menu } from './interfaces'
+import { menu, filter } from './interfaces'
 
 export const baseUri: string = window.location.origin
 
@@ -36,4 +36,18 @@ export const sortBy: menu[] = [
     { name: "Latest", keyword: "" },
     { name: "Price: High to Low", keyword: "price_dsc" },
     { name: "Price: Low to High", keyword: "price_asc" }
+]
+
+export const Brands: filter[] = [
+    { value: "nike", checked: false },
+    { value: "adidas", checked: false },
+    { value: "puma", checked: false },
+    { value: "roadster", checked: false }
+]
+
+export const Colors: filter[] = [
+    { value: "black", checked: false },
+    { value: "white", checked: false },
+    { value: "red", checked: false },
+    { value: "green", checked: false }
 ]

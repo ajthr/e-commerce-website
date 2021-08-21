@@ -33,3 +33,8 @@ export interface brand {
     name: string, 
     image: string 
 }
+
+export interface filter { 
+    value: string,
+    checked: boolean
+}

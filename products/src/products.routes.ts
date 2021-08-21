@@ -8,8 +8,17 @@ const router = Router();
 
 router.get('/', async (request: Request, response: Response): Promise<void> => {
     try {
-        const products: product[] | null = await Product.find(request.query).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0, createdAt: 0 })
-        
+        const { sort }: { sort?: string } = request.query;
+        delete request.query["sort"];
+        let products: product[] | null;
+        if (sort === "price_asc") {
+            products = await Product.find(request.query).sort({ price: 1 }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0 })
+        } else if (sort === "price_dsc") {
+            products = await Product.find(request.query).sort({ price: -1 }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0 })
+        } else {
+            products = await Product.find(request.query).sort({ createdAt: -1 }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0 })
+        }
+
         if (products !== null) {
             response.status(200).send(products)
             return;
@@ -26,7 +35,7 @@ router.get('/', async (request: Request, response: Response): Promise<void> => {
 router.get('/latest', async (request: Request, response: Response): Promise<void> => {
     const { limit }: any = request.query;
     try {
-        const products: product[] | undefined = await Product.find({}).sort({ createdAt: -1 }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0, createdAt: 0 }).limit(parseInt(limit))
+        const products: product[] | null = await Product.find({}).sort({ createdAt: -1 }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0, createdAt: 0 }).limit(parseInt(limit))
 
         if (products !== null) {
             response.status(200).send(products)
@@ -47,7 +56,7 @@ router.get('/similar', async (request: Request, response: Response): Promise<voi
         let category: product | null = await Product.findOne({
             _id: id,
         });
-        const products: product[] | undefined = await Product.find({ _id: {$ne: id}, category: category?.category }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0, createdAt: 0 }).limit(parseInt(limit))
+        const products: product[] | undefined = await Product.find({ _id: { $ne: id }, category: category?.category }).select({ description: 0, name: 0, specifications: 0, sizes: 0, category: 0, createdAt: 0 }).limit(parseInt(limit))
 
         if (products !== null) {
             response.status(200).send(products)

@@ -15,7 +15,8 @@ export interface product {
     price: number,
     msrp: number,
     description: string,
-    images: string[]
+    images: string[],
+    createdAt: Date
 }
 
 export interface menu {

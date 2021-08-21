@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import axios, { AxiosError } from "axios";
 
-import { baseUri } from "../assets/constants";
+import { baseUri, menMenu, womenMenu } from "../assets/constants";
 
 import { ApiContext } from '../contexts/ApiContext'
 
 const Navbar = () => {
     const { user, setModal, setUser } = useContext(ApiContext);
+
+    const history = useHistory();
 
     const logout = () => {
         axios.post(baseUri + "/api/auth/logout/")
@@ -50,18 +52,13 @@ const Navbar = () => {
                                 className="dropdown-menu"
                                 aria-labelledby="navbarDarkDropdownMenuLink"
                             >
-                                <li>
-                                    <span className="dropdown-item">Casual Shoes</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Formal Shoes</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Sports Shoes</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Sneakers</span>
-                                </li>
+                                {menMenu.map((item, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <span onClick={() => history.push("/p" + item.keyword)} className="dropdown-item">{item.name}</span>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </li>
                         <li className="nav-item dropdown mx-2">
@@ -78,40 +75,13 @@ const Navbar = () => {
                                 className="dropdown-menu"
                                 aria-labelledby="navbarDarkDropdownMenuLink"
                             >
-                                <li>
-                                    <span className="dropdown-item">Boots</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Casual Shoes</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Sports Shoes</span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li className="nav-item dropdown mx-2">
-                            <span
-                                className="nav-link dropdown-toggle"
-                                id="navbarDarkDropdownMenuLink"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                Kids
-                            </span>
-                            <ul
-                                className="dropdown-menu"
-                                aria-labelledby="navbarDarkDropdownMenuLink"
-                            >
-                                <li>
-                                    <span className="dropdown-item">Casual Shoes</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">School Shoes</span>
-                                </li>
-                                <li>
-                                    <span className="dropdown-item">Sports Shoes</span>
-                                </li>
+                                {womenMenu.map((item, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <span onClick={() => history.push("/p" + item.keyword)} className="dropdown-item">{item.name}</span>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </li>
                     </ul>

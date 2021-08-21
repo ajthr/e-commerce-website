@@ -7,22 +7,17 @@ export const baseUri: string = window.location.origin
 export const heroImage: string = "https://source.unsplash.com/jLEGurepDco/1600x800"
 
 export const menMenu: menu[] = [
-    {name : "Casual Shoes", keyword: ""},
-    {name : "Formal Shoes", keyword: ""},
-    {name : "Sports Shoes", keyword: ""},
-    {name : "Sneakers", keyword: ""}
+    {name : "Sneakers", keyword: "?category=sneakers&gender=men"},
+    {name : "Loafers", keyword: "?category=loafers&gender=men"},
+    {name : "Boots", keyword: "?category=boots&gender=men"},
+    {name : "Sports", keyword: "?category=sports&gender=men"}
 ]
 
 export const womenMenu: menu[] = [
-    {name : "Boots", keyword: ""},
-    {name : "Casual Shoes", keyword: ""},
-    {name : "Sports Shoes", keyword: ""}
-]
-
-export const kidsMenu: menu[] = [
-    {name : "Casual Shoes", keyword: ""},
-    {name : "Casual Shoes", keyword: ""},
-    {name : "Sports Shoes", keyword: ""}
+    {name : "Sneakers", keyword: "?category=sneakers&gender=women"},
+    {name : "Boots", keyword: "?category=boots&gender=women"},
+    {name : "Heels", keyword: "?category=heels&gender=women"},
+    {name : "flats", keyword: "?category=flats&gender=women"}
 ]
 
 export const profileMenu: menu[] = [
@@ -37,8 +32,8 @@ export const features: { feature: string, class: string }[] = [
     { feature: "Secure Payment", class: "fas fa-database fs-3" }
 ]
 
-export const sortBy: string[] = [
-    "Latest",
-    "Price: High to Low",
-    "Price: Low to High"
+export const sortBy: menu[] = [
+    { name: "Latest", keyword: "" },
+    { name: "Price: High to Low", keyword: "price_dsc" },
+    { name: "Price: Low to High", keyword: "price_asc" }
 ]
